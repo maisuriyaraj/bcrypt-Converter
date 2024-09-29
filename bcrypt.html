@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encryption & Decryption Demo</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        input, button {
+            margin: 10px 0;
+            padding: 10px;
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .output {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Text Encryption & Decryption</h2>
+        
+        <!-- Encryption Section -->
+        <input type="text" id="userText" placeholder="Enter text to encrypt">
+        <button onclick="encryptText()">Encrypt</button>
+        <div class="output">
+            <p><strong>Encrypted Text:</strong></p>
+            <p id="encryptedText"></p>
+        </div>
+        
+        <!-- Decryption Section -->
+        <input type="text" id="decryptText" placeholder="Enter text to decrypt">
+        <button onclick="decryptText()">Decrypt</button>
+        <div class="output">
+            <p><strong>Decrypted Text:</strong></p>
+            <p id="decryptedText"></p>
+        </div>
+    </div>
+
+    <script>
+        let encryptedText = '';
+
+        // Function to encrypt user input text
+        function encryptText() {
+            const userText = document.getElementById('userText').value;
+            const secretKey = 'mySecretKey'; // You can change this key
+            encryptedText = CryptoJS.AES.encrypt(userText, secretKey).toString();
+            document.getElementById('encryptedText').innerText = encryptedText;
+        }
+
+        // Function to decrypt the encrypted text
+        function decryptText() {
+            const secretKey = 'mySecretKey'; // Should match the encryption key
+            const bytes = CryptoJS.AES.decrypt(encryptedText, secretKey);
+            const originalText = bytes.toString(CryptoJS.enc.Utf8);
+            document.getElementById('decryptedText').innerText = originalText;
+        }
+    </script>
+
+</body>
+</html>
